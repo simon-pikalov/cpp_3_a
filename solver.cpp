@@ -59,6 +59,7 @@ RealVariable solver::operator==(double b,const RealVariable a ){return  RealVari
 RealVariable solver::operator+(RealVariable a ,RealVariable  b){return  RealVariable();} //  +
 RealVariable solver::operator-(RealVariable a ,RealVariable  b){return  RealVariable();} //  -
 RealVariable solver::operator/(RealVariable a ,RealVariable  b){return  RealVariable();}//  /
+RealVariable solver::operator*(RealVariable a ,RealVariable  b){return  RealVariable();}//  *
 RealVariable solver::operator==(RealVariable a ,const RealVariable b){return  RealVariable();} //==
 
 //ComplexVariable and double

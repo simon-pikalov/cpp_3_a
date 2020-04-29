@@ -62,7 +62,7 @@ RealVariable operator==(double b,const RealVariable a );
 RealVariable operator+(RealVariable a ,RealVariable  b); //  +
 RealVariable operator-(RealVariable a ,RealVariable  b); //  -
 RealVariable operator/(RealVariable a ,RealVariable  b);//  /
-RealVariable operator/(RealVariable a ,RealVariable  b); //*
+RealVariable operator*(RealVariable a ,RealVariable  b); //*
 RealVariable operator==(const RealVariable a ,const RealVariable b); //==
 
 //ComplexVariable and double
