@@ -8,12 +8,19 @@
 
 #include <iostream>
 #include <complex>
+#include <string>
 #include "solver.hpp"
 
 using namespace std;
 using solver::solve, solver::RealVariable, solver::ComplexVariable;
 
+
+
+
+
 int main() {
+
+
     RealVariable x;
 
     cout << solve(2*x-4 == 10) << endl;  // 7
@@ -23,6 +30,8 @@ int main() {
 	} catch (const exception& ex) {
 	 	cout << ex.what() << endl;  // prints "There is no real solution"
 	}
+
+
     cout << solve((x^2) + 2*x + 4.0 == 20 + 6.0*x/2 - x) << endl;   // 4 or -4
     double xvalue = solve(2*x-4.0 == 10.0);   // xvalue == 7
 
