@@ -4,9 +4,10 @@
 
 #ifndef A_3_SOLVER_HPP
 #define A_3_SOLVER_HPP
-using std::complex;
 
 #include <iostream>
+using namespace::std;
+#include <complex>
 namespace solver
 {
 class RealVariable {
