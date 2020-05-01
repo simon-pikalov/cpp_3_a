@@ -35,6 +35,15 @@ class noSulutionExExeption: public exception
 } noSulutionEx;
 
 
+class devideByZeroExeption: public exception
+{
+    virtual const char* what() const throw()
+    {
+        return "Your equation has no sulution in this Number field ";
+    }
+} devideByZeroEx;
+
+
 
 double solver::round(double toRound){
 double rounded=std::round(toRound*1000);
@@ -95,11 +104,21 @@ ostream& solver::operator<< (ostream& os,RealVariable r) {
 
 
 double solver::solve(RealVariable a) 
-{double minusB = -a.bx;
-double twoA = a.ax_2;
+{
+if(a.ax_2!=0){
+double minusB = -a.bx;
+double twoA = 2*a.ax_2;
 double delta = sqrt((a.bx*a.bx)-4*a.ax_2*a.c);
 if(delta<0) throw noSulutionEx; // no soulution in R field 
 return ((minusB+delta)/twoA);
+}
+else{
+if(a.c==0&&a.bx!=0) throw devideByZeroEx;
+    return(a.c/a.bx);
+
+}
+
+
 }
 
 
@@ -166,7 +185,7 @@ return a; //case it's 0
 
 
 RealVariable solver::operator==(RealVariable a ,double b){
-a.c-=b;; //move b to the right side of the equation 
+a.c=a.c+(-1*(b));; //move b to the right side of the equation 
 return a;
 }//  ==
 RealVariable solver::operator==(double b,RealVariable a ){

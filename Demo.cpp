@@ -24,13 +24,13 @@ int main() {
 
     RealVariable x;
     cout<<"\n\n\n\n\n\n"<<((2*(x^2)+5))<<" \n\n\n\n  ";
-    // cout << solve((2*x-4 == 10)) << endl;  // 7
-    // cout << solve(((x^2) == 16)) << endl;   // 4 or -4
-    // try {
-    //     cout << solve(((x^2) == -16)) << endl;
-	// } catch (const exception& ex) {
-	//  	cout << ex.what() << endl;  // prints "There is no real solution"
-	// }
+    cout << solve((2*x-4 == 10)) << endl;  // 7
+    cout << solve(((x^2) == 16)) << endl;   // 4 or -4
+    try {
+        cout << solve(((x^2) == -16)) << endl;
+	} catch (const exception& ex) {
+	 	cout << ex.what() << endl;  // prints "There is no real solution"
+	}
 
 
     // cout << solve((x^2) + 2*x + 4.0 == 20 + 6.0*x/2 - x) << endl;   // 4 or -4

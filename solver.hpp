@@ -61,8 +61,8 @@ RealVariable operator+(double b,RealVariable a );
 RealVariable operator/(RealVariable a ,double b);//  /
 RealVariable operator/(double b,RealVariable a );
 RealVariable operator^(RealVariable a ,double b);
-double operator==(RealVariable a ,double b);    //  ==
-double operator==(double b,const RealVariable a );
+RealVariable operator==(RealVariable a ,double b);    //  ==
+RealVariable operator==(double b,const RealVariable a );
 
 //RealVariable and RealVariable
 RealVariable operator+(RealVariable a ,RealVariable  b); //  +
