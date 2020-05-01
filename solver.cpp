@@ -94,7 +94,15 @@ ostream& solver::operator<< (ostream& os,RealVariable r) {
 }
 
 
-double solver::solve(RealVariable real) {return 666;}
+double solver::solve(RealVariable a) 
+{double minusB = -a.bx;
+double twoA = a.ax_2;
+double delta = sqrt((a.bx*a.bx)-4*a.ax_2*a.c);
+if(delta<0) throw noSulutionEx; // no soulution in R field 
+return ((minusB+delta)/twoA);
+}
+
+
 complex<double> solver::solve(ComplexVariable comp) {return 666i;}
 
 
@@ -157,17 +165,13 @@ return a; //case it's 0
 }
 
 
-double solver::operator==(RealVariable a ,double b){
+RealVariable solver::operator==(RealVariable a ,double b){
 a.c-=b;; //move b to the right side of the equation 
-double minusB = -a.bx;
-double twoA = a.ax_2;
-double delta = sqrt((a.bx*a.bx)-4*a.ax_2*a.c);
-if(delta<0) throw noSulutionEx; // no soulution in R field 
-return ((minusB+delta)/twoA);
-
-
+return a;
 }//  ==
-double solver::operator==(double b,RealVariable a ){return  0;}
+RealVariable solver::operator==(double b,RealVariable a ){
+solver::operator==(a,b);
+}
 
 //RealVariable and RealVariable
 RealVariable solver::operator+(RealVariable a ,RealVariable  b){return  RealVariable();} //  +
