@@ -3,6 +3,9 @@
         "string": "cpp",
         "complex": "cpp",
         "chrono": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "iosfwd": "cpp",
+        "xstring": "cpp",
+        "iostream": "cpp"
     }
 }
