@@ -84,10 +84,10 @@ ostream& solver::operator<< (ostream& os,RealVariable r) {
     string ax_2Singm="";
     string bxSingm=""; 
     string cSingm=""; 
-    if(r.ax_2<0) ax_2Singm+="-";
-    if(r.bx<0) bxSingm+="-";
+    if(r.ax_2<0) ax_2Singm+="";
+    if(r.bx<0) bxSingm+="";
     else bxSingm+="+";
-    if(r.c<0) cSingm+="-";
+    if(r.c<0) cSingm+="";
     else cSingm+="+";
 
 
@@ -105,17 +105,19 @@ ostream& solver::operator<< (ostream& os,RealVariable r) {
 
 double solver::solve(RealVariable a) 
 {
+cout<<"debug"<<a<<"="<<endl;
 if(a.ax_2!=0){
 double minusB = -a.bx;
 double twoA = 2*a.ax_2;
-double delta = sqrt((a.bx*a.bx)-4*a.ax_2*a.c);
+double delta = ((a.bx*a.bx)-4*a.ax_2*a.c);
 if(delta<0) throw noSulutionEx; // no soulution in R field 
-return ((minusB+delta)/twoA);
+ //cout<<"debug"<<a<<"=";
+return ((minusB+sqrt(delta))/twoA);
 }
 else{
 if(a.c==0&&a.bx!=0) throw devideByZeroEx;
-    return(a.c/a.bx);
-
+    //cout<<"debug"<<a<<"=";
+    return(-a.c/a.bx);
 }
 
 
@@ -185,7 +187,7 @@ return a; //case it's 0
 
 
 RealVariable solver::operator==(RealVariable a ,double b){
-a.c=a.c+(-1*(b));; //move b to the right side of the equation 
+a.c=a.c-b; //move b to the left side of the equation 
 return a;
 }//  ==
 RealVariable solver::operator==(double b,RealVariable a ){

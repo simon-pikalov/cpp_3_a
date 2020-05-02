@@ -23,9 +23,8 @@ int main() {
 
 
     RealVariable x;
-    cout<<"\n\n\n\n\n\n"<<((2*(x^2)+5))<<" \n\n\n\n  ";
-    cout << solve((2*x-4 == 10)) << endl;  // 7
-    cout << solve(((x^2) == 16)) << endl;   // 4 or -4
+    cout << solve(2*x-4 == 10) << endl;  // 7
+    cout << solve((x^2) == 16) << endl;   // 4 or -4
     try {
         cout << solve(((x^2) == -16)) << endl;
 	} catch (const exception& ex) {
@@ -33,8 +32,8 @@ int main() {
 	}
 
 
-    // cout << solve((x^2) + 2*x + 4.0 == 20 + 6.0*x/2 - x) << endl;   // 4 or -4
-    // double xvalue = solve(2*x-4.0 == 10.0);   // xvalue == 7
+    cout << solve((x^2) + 2*x + 4.0 == 20 + 6.0*x/2 - x) << endl;   // 4 or -4
+    double xvalue = solve(2*x-4.0 == 10.0);   // xvalue == 7
 
     // ComplexVariable y;
     // std::complex<double> yvalue = solve(2*y-4 == 10);
