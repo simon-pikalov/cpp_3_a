@@ -1,4 +1,5 @@
-# FamilyTree
+# Solver
+
 This  project is The Third assintment of C++ course in  Ariel university 
   
  
