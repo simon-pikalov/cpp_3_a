@@ -101,6 +101,7 @@ ostream& solver::operator<< (ostream& os,RealVariable r) {
 
 double solver::solve(RealVariable a)
 {
+    if((a.ax_2==0&&a.bx==0)) throw noSulutionEx;
 //cout<<"debug"<<a<<"="<<endl;
     if(a.ax_2!=0){
         double minusB = -a.bx;
@@ -111,7 +112,7 @@ double solver::solve(RealVariable a)
         return ((minusB+sqrt(delta))/twoA);
     }
     else{
-        if(a.c==0&&a.bx!=0) throw devideByZeroEx;
+
         //cout<<"debug"<<a<<"=";
         return(-a.c/a.bx);
     }
@@ -120,7 +121,28 @@ double solver::solve(RealVariable a)
 }
 
 
-complex<double> solver::solve(ComplexVariable comp) {return 666i;}
+complex<double> solver::solve(ComplexVariable comp) {
+
+    if((comp.ax_2.real()==0&&comp.bx.real()==0)) throw noSulutionEx;
+
+//cout<<"debug"<<a<<"="<<endl;
+    if(comp.ax_2!=(0.0,0.0)){
+        complex<double> minusB = -comp.bx;
+        complex<double> twoA = 2.0*comp.ax_2;
+        complex<double> delta = ((comp.bx*comp.bx)-4.0*comp.ax_2*comp.c);
+        //cout<<"debug"<<a<<"=";
+        return ((minusB+sqrt(delta))/twoA);
+    }
+    else{
+        if(comp.c==((0.0,0.0))&&comp.bx!=((0.0,0.0))) throw devideByZeroEx;
+        //cout<<"debug"<<a<<"=";
+        return(-comp.c/comp.bx);
+    }
+
+
+
+
+}
 
 
 
@@ -158,6 +180,7 @@ RealVariable solver::operator+(double b,RealVariable a ){
     return solver::operator+(a,b);
 }
 RealVariable solver::operator/(RealVariable a ,double b){
+    if(b==0) throw devideByZeroEx;
     return solver::operator*(a,1/b);
 } //  /
 RealVariable solver::operator/(double b,RealVariable a ){
@@ -194,17 +217,11 @@ RealVariable solver::operator==(double b,RealVariable a ){
 
 //RealVariable and RealVariable
 RealVariable solver::operator+(RealVariable a ,RealVariable  b){
-
     RealVariable ans=RealVariable();
     ans.ax_2=a.ax_2+b.ax_2;
     ans.bx=a.bx+b.bx;
     ans.c=a.c+b.c;
     return ans;
-
-
-
-
-
 } //  +
 RealVariable solver::operator-(RealVariable a ,RealVariable  b){
     RealVariable ans=RealVariable();
@@ -285,7 +302,7 @@ ComplexVariable solver::operator+(ComplexVariable a ,double b){
     ComplexVariable ans=ComplexVariable();
     ans.ax_2 =a.ax_2;
     ans.bx= a.bx;
-    ans.c= a.c;
+    ans.c= a.c+b;
     return ans;
 }// +
 ComplexVariable solver::operator+(double b,ComplexVariable a ){
@@ -302,8 +319,18 @@ ComplexVariable solver::operator/(double b,ComplexVariable a ){
 }
 ComplexVariable solver::operator^(ComplexVariable a ,double pow){
     if(pow>=3||a.ax_2.real()!=0&&pow!=1) throw xPowerEx;
+
+
+
+
+
 //case one there is onle x ;
     if(a.bx.real()!=0&&a.c==complex<double> (0.0,0.0)) {
+        if(pow==0) {
+            a.bx=0;
+            a.c+=1;
+            return a;
+        }
         a.ax_2=a.bx*a.bx;
         a.bx=0;
         return a;
@@ -321,42 +348,29 @@ ComplexVariable solver::operator^(ComplexVariable a ,double pow){
 
 } //^
 ComplexVariable solver::operator==(ComplexVariable a ,double b){
-
-
-
-
-
-    return  ComplexVariable();}// ==
-ComplexVariable solver::operator==(double b,ComplexVariable a )
-
-
-
-
-
-
-{return  ComplexVariable();}
+    a.c-=b;
+    return a;
+}// ==
+ComplexVariable solver::operator==(double b,ComplexVariable a ){
+    return solver::operator==(a,b);
+}
 
 //ComplexVariable and ComplexVariable
 ComplexVariable solver::operator+(ComplexVariable a ,ComplexVariable  b){
-
-
-
-
-    return  ComplexVariable();}//+
+    ComplexVariable ans=ComplexVariable();
+    ans.ax_2 =a.ax_2+b.ax_2;
+    ans.bx= a.bx+b.bx;
+    ans.c= a.c*b.c;
+    return ans;
+}//+
 ComplexVariable solver::operator-(ComplexVariable a ,ComplexVariable  b){
+    ComplexVariable ans=ComplexVariable();
+    ans.ax_2 =a.ax_2-b.ax_2;
+    ans.bx= a.bx-b.bx;
+    ans.c= a.c-b.c;
+    return ans;
+}//+
 
-
-
-
-
-    return  ComplexVariable();}//-
-ComplexVariable solver::operator/(ComplexVariable a ,ComplexVariable  b){
-
-
-
-
-
-    return  ComplexVariable();}// /
 ComplexVariable solver::operator*(ComplexVariable a ,ComplexVariable  b){
 
 
@@ -364,26 +378,9 @@ ComplexVariable solver::operator*(ComplexVariable a ,ComplexVariable  b){
 
     return  ComplexVariable();}// *
 ComplexVariable solver::operator==(ComplexVariable a ,ComplexVariable b){
+    return solver::operator-(a,b);
+}// ==
 
-
-
-
-
-
-    return  ComplexVariable();}// ==
-
-
-//ComplexVariable and RealVariable
-ComplexVariable solver::operator-(ComplexVariable a ,RealVariable  b){return  ComplexVariable();}//-
-ComplexVariable solver::operator-(RealVariable a ,ComplexVariable b){return  ComplexVariable();}
-ComplexVariable solver::operator+(ComplexVariable a ,RealVariable  b){return  ComplexVariable();}//+
-ComplexVariable solver::operator+(RealVariable a ,ComplexVariable b){return  ComplexVariable();}
-ComplexVariable solver::operator*(ComplexVariable a ,RealVariable  b){return  ComplexVariable();}//*
-ComplexVariable solver::operator*(RealVariable a ,ComplexVariable b){return  ComplexVariable();}
-ComplexVariable solver::operator/(ComplexVariable a ,RealVariable  b){return  ComplexVariable();}// /
-ComplexVariable solver::operator/(RealVariable a ,ComplexVariable b){return  ComplexVariable();}
-ComplexVariable solver::operator==(ComplexVariable a ,RealVariable b){return  ComplexVariable();}// ==
-ComplexVariable solver::operator==(RealVariable a ,ComplexVariable b){return  ComplexVariable();}
 
 
 
@@ -395,7 +392,7 @@ ComplexVariable solver::operator+(ComplexVariable a ,complex<double>  b){
     ans.c= a.c+b;
     return ans;}//+
 ComplexVariable solver::operator+(complex<double> b ,ComplexVariable a){
-return solver::operator+(a,b);
+    return solver::operator+(a,b);
 }
 ComplexVariable solver::operator-(ComplexVariable a ,complex<double>   b)
 {
@@ -429,25 +426,16 @@ ComplexVariable solver::operator*(ComplexVariable a ,complex<double>   b){
     ans.bx= a.bx*b;
     ans.c= a.c*b;
     return ans;
-            }// *
+}// *
 ComplexVariable solver::operator*(complex<double> b ,ComplexVariable a){
     return solver::operator*(a,b);}
 ComplexVariable solver::operator==(ComplexVariable a ,complex<double>   b){
-
-
-
-
-
-    return  ComplexVariable();}// ==
-ComplexVariable solver::operator==(complex<double> a ,ComplexVariable b){
-
-
-
-
-
-
-
-    return  ComplexVariable();}
+    a.c-=b;
+    return a;
+}// ==
+ComplexVariable solver::operator==(complex<double> b ,ComplexVariable a){
+    solver::operator==(a,b);
+}
 
 
 
