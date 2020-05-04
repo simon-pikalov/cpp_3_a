@@ -75,7 +75,12 @@ ComplexVariable::~ComplexVariable() {
 
 
 
-
+/**
+ *
+ * @param os input stream
+ * @param r RealVariable function to be printed
+ * @return a output to standart output
+ */
 ostream& solver::operator<< (ostream& os,RealVariable r) {
     string ax_2Singm="";
     string bxSingm="";
@@ -98,7 +103,11 @@ ostream& solver::operator<< (ostream& os,RealVariable r) {
     return (os <<ax_2 <<bx<<c);
 }
 
-
+/**
+ *
+ * @param comp a RealVariable function to solve it's 0 value for the Unknown
+ * @return  double value
+ */
 double solver::solve(RealVariable a)
 {
     if((a.ax_2==0&&a.bx==0)) throw noSulutionEx;
@@ -121,28 +130,6 @@ double solver::solve(RealVariable a)
 }
 
 
-complex<double> solver::solve(ComplexVariable comp) {
-
-    if((comp.ax_2.real()==0&&comp.bx.real()==0)) throw noSulutionEx;
-
-//cout<<"debug"<<a<<"="<<endl;
-    if(comp.ax_2!=(0.0,0.0)){
-        complex<double> minusB = -comp.bx;
-        complex<double> twoA = 2.0*comp.ax_2;
-        complex<double> delta = ((comp.bx*comp.bx)-4.0*comp.ax_2*comp.c);
-        //cout<<"debug"<<a<<"=";
-        return ((minusB+sqrt(delta))/twoA);
-    }
-    else{
-        if(comp.c==((0.0,0.0))&&comp.bx!=((0.0,0.0))) throw devideByZeroEx;
-        //cout<<"debug"<<a<<"=";
-        return(-comp.c/comp.bx);
-    }
-
-
-
-
-}
 
 
 
@@ -253,7 +240,12 @@ RealVariable solver::operator==(RealVariable a , RealVariable b){
 
 ///////////////////////////////////////////////__________COMLEX_____________________________////////////////////////////
 
-
+/**
+ *
+ * @param os input stream
+ * @param c complex function to be printed
+ * @return a output to standart output
+ */
 ostream& solver::operator<< (ostream& os,  ComplexVariable c){
 
     string ax_2Singm="";
@@ -265,10 +257,38 @@ ostream& solver::operator<< (ostream& os,  ComplexVariable c){
     if(c.c.real()<0) cSingm+="";
     else cSingm+="+";
 
-    string ax_2=(c.ax_2==(0.0,0.0))? "" :"("+ax_2Singm+to_string((c.ax_2).real())+","+to_string((c.ax_2).imag())+"i)"+"x^2";
-    string bx=(c.bx==(0.0,0.0))? "" : "("+bxSingm+to_string((c.bx).real())+","+to_string((c.bx).imag())+"i)"+"x";
-    string cC =(c.c==(0.0,0.0))? "" :"("+cSingm+to_string((c.c).real())+","+to_string((c.c).imag())+"i)";
+    string ax_2=(c.ax_2==(0.0,0.0))? "" :ax_2Singm+"("+to_string((c.ax_2).real())+","+to_string((c.ax_2).imag())+"i)"+"x^2";
+    string bx=(c.bx==(0.0,0.0))? "" : bxSingm+"("+to_string((c.bx).real())+","+to_string((c.bx).imag())+"i)"+"x";
+    string cC =(c.c==(0.0,0.0))? "" :cSingm+"("+to_string((c.c).real())+","+to_string((c.c).imag())+"i)";
     return (os <<ax_2 <<bx<<cC);
+
+
+}
+
+/**
+ *
+ * @param comp a ComplexVariable function to solve it's 0 value for the Unknown
+ * @return  complex<double> value
+ */
+complex<double> solver::solve(ComplexVariable comp) {
+
+    if((comp.ax_2.real()==0&&comp.bx.real()==0)) throw noSulutionEx;
+
+//cout<<"debug"<<a<<"="<<endl;
+    if(comp.ax_2!=(0.0,0.0)){
+        complex<double> minusB = -comp.bx;
+        complex<double> twoA = 2.0*comp.ax_2;
+        complex<double> delta = ((comp.bx*comp.bx)-4.0*comp.ax_2*comp.c);
+        //cout<<"debug"<<a<<"=";
+        return ((minusB+sqrt(delta))/twoA);
+    }
+    else{
+        if(comp.c==((0.0,0.0))&&comp.bx!=((0.0,0.0))) throw devideByZeroEx;
+        //cout<<"debug"<<a<<"=";
+        return(-comp.c/comp.bx);
+    }
+
+
 
 
 }
